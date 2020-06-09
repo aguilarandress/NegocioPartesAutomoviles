@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout.html}"
+      lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Afiliar parte</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body bg-light">
+                <h4><i class="fa fa-link" aria-hidden="true"></i> Crear afilicación</h4>
+                <p>Todos los campos son requeridos</p>
+                <form action="#" th:action="@{/partes/join}" th:object="${holder}" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Partes:</label>
+                        </div>
+                        <select th:field="*{parte}" class="custom-select">
+                            <option th:value="${parte}" th:each="parte : ${partes}" th:text="${parte}"></option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Provedores:</label>
+                        </div>
+                        <select th:field="*{proveedor}" class="custom-select">
+                            <option th:value="${proveedor}" th:each="proveedor : ${provedores}" th:text="${proveedor}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-group-text">Precio:</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{precio}" placeholder="Precio..." >
+                    </div>
+                    <div class="form-group">
+                        <label class="input-group-text">Porcentaje de ganancia:</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{porcentaje_ganancia}" placeholder="Porcentaje de ganancia..." >
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block"><i class="fa fa-plus"></i> Realizar afiliacion </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

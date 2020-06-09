@@ -1,0 +1,81 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout.html}"
+      lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detalles orden</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-4"> <i class="fa fa-file-text" ></i></i> Orden: #<span th:text="${orden.getConsecutivo()}"></span></h2>
+        </div>
+        <div class="col-md-6">
+            <a th:href="@{~/ordenes}" class="btn btn-light mb-3 float-right"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Volver</a>
+        </div>
+    </div>
+    <p><i class="fa fa-user"></i> Cliente: <span th:text="${orden.getNombreCliente()}"></span></p>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <th>Producto</th>
+                <th>Proveedor</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <tr th:each="detalle: ${detalles}">
+                    <td th:text="${detalle.getNombre_parte()}"></td>
+                    <td th:text="${detalle.getNombre_provedor()}"></td>
+                    <td th:text="'₡ ' + ${detalle.precio + (detalle.precio*(detalle.porcentaje_ganancia/100))}"></td>
+                    <td th:text="${detalle.cantidad}"></td>
+                </tr>
+                <tr>
+                    <td><strong>Subtotal </strong></td>
+                    <td th:text="'₡ ' + ${total}"></td>
+                    <td ></td>
+                    <td ></td>
+                </tr>
+                <tr>
+                    <td><strong>Monto IVA</strong></td>
+                    <td th:text="'₡ ' + ${total*0.13}"></td>
+                    <td ></td>
+                    <td ></td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td th:text="'₡ ' + ${total+(total*0.13)}"></td>
+                    <td ></td>
+                    <td ></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <form action="#" th:action="@{'/ordenes/' + ${orden.getConsecutivo()}}" method="get">
+                <input type="text" name="nombre_parte" placeholder="Buscar parte..." class="form-control mb-3">
+                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> Buscar</button>
+            </form>
+            <div th:if="${afiliaciones.size()} > 0">
+                <div th:each="afiliacion : ${afiliaciones}" class="card card-body my-3">
+                    <h5 th:text="${afiliacion.getNombre_provedor()}"></h5>
+                    <p><strong>Precio: </strong> <span th:text="${afiliacion.getPrecio()}"></span></p>
+                    <p><strong>Porcentaje ganancia: </strong> <span th:text="${afiliacion.getPorcentaje_ganancia()}"></span></p>
+                    <form action="#" th:action="@{'/ordenes/' + ${orden.getConsecutivo()} + '/detalles/add'}" method="post">
+                        <input type="number" class="form-control" name="cantidad" min="1" step="1" value="1" required>
+                        <input type="hidden" name="parte_id" th:value="${afiliacion.getParteID()}">
+                        <input type="hidden" name="provedor_id" th:value="${afiliacion.getProveedorID()}">
+                        <button type="submit" class="btn btn-success btn-block mt-3">Agregar parte</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>>

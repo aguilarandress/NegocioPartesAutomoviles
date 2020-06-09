@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout.html}"
+      lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Agregar parte</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body bg-light">
+                <h4><i class="fa fa-cog"></i> Agregar Parte</h4>
+                <p>Todos los campos son requeridos</p>
+                <form action="#" th:action="@{/partes/add}" th:object="${parte}" method="post">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre..." >
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Fabricante:</label>
+                        </div>
+                        <select th:field="*{fabricante}" class="custom-select">
+                            <option th:value="${fabricante}" th:each="fabricante : ${fabricantes}" th:text="${fabricante}"></option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Marca:</label>
+                        </div>
+                        <select th:field="*{marca}" class="custom-select">
+                            <option th:value="${marca}" th:each="marca : ${marcas}" th:text="${marca}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block"><i class="fa fa-plus"></i> Agregar parte</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

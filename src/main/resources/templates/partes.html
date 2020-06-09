@@ -1,0 +1,76 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout.html}"
+      lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Partes</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h2><i class="fa fa-cog"></i> Partes</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-9">
+            <form action="#" th:action="@{/partes}" method="get">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Modelo:</label>
+                            </div>
+                            <select name="modelo" class="custom-select">
+                                <option th:value="${modelo}" th:each="modelo : ${modelos}" th:text="${modelo}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Año:</label>
+                            </div>
+                            <select name="anio" class="custom-select">
+                                <option th:value="${anio}" th:each="anio : ${anios}" th:text="${anio}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fa fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <th>NOMBRE</th>
+                    <th>MARCA</th>
+                    <th>FABRICANTE</th>
+                    <th>DETALLES</th>
+                </thead>
+                <tbody>
+                <tr th:each="parte: ${partes}">
+                    <td th:text="${parte.getNombre()}"></td>
+                    <td th:text="${parte.getMarca()}"></td>
+                    <td th:text="${parte.getFabricante()}"></td>
+                    <td>
+                        <a th:href="@{'~/partes/' + ${parte.getParteID()}}" class="btn btn-dark btn-block">Detalles</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/partes/add}" class="btn btn-success btn-block"><i class="fa fa-plus"></i> Agregar parte</a>
+            <a th:href="@{/partes/join}" class="btn btn-primary btn-block"><i class="fa fa-link"></i> Afiliar con proveedor</a>
+            <a th:href="@{/partes/joinEdit}" class="btn btn-warning btn-block"><i class="fa fa-pencil"></i> Modificar afiliaciones</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>
